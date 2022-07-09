@@ -3,6 +3,7 @@ package com.halil.TopYakala;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         timeText = (TextView) findViewById(R.id.zamanText);
-        scoreText = (TextView) findViewById(R.id.puanText);
+        scoreText = (TextView) findViewById(R.id.scoreText);
         imageView0 = findViewById(R.id.imageView0);
         imageView1 = findViewById(R.id.imageView1);
         imageView2 = findViewById(R.id.imageView2);
@@ -60,12 +61,14 @@ public class MainActivity extends AppCompatActivity {
         new CountDownTimer(10000,1000) {
 
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTick(long millisUntilFinished) {
                 timeText.setText("Zaman: " + millisUntilFinished/1000);
 
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onFinish() {
 
@@ -78,24 +81,16 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
                 alert.setTitle("Oyunu Sıfırla ?");
                 alert.setMessage("Baştan başlasın mı");
-                alert.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //restart
+                alert.setPositiveButton("Evet", (dialog, which) -> {
+                    //restart
 
-                        Intent intent = getIntent(); //bunu çok kullanmayız normalde iki aktivite arasında geçiş yapmak için kullandığmız intent, startactivit intent dediğimizde kendi aktivitemizi baştan başlatıyoruz
-                        finish(); //uygulamayı yormamak için güncel aktiviteyi destroy ediyoruz
-                        startActivity(intent);
+                    Intent intent = getIntent(); //bunu çok kullanmayız normalde iki aktivite arasında geçiş yapmak için kullandığmız intent, startactivit intent dediğimizde kendi aktivitemizi baştan başlatıyoruz
+                    finish(); //uygulamayı yormamak için güncel aktiviteyi destroy ediyoruz
+                    startActivity(intent);
 
-                    }
                 });
 
-                alert.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MainActivity.this, "Oyun Bitti", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                alert.setNegativeButton("Hayır", (dialog, which) -> Toast.makeText(MainActivity.this, "Oyun Bitti", Toast.LENGTH_SHORT).show());
 
                 alert.show();
 
@@ -103,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         }.start(); //countdown timeri başlat
     }
 
+    @SuppressLint("SetTextI18n")
     public void skorattir (View view) {
 
         score++; //score = score + 1;
